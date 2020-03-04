@@ -10,7 +10,7 @@
     <h3 class="fnt">Müşteri Hikayeleri</h3>
     <div class="row" >
 
-    <a style="border-color: red;border-width: 2px;"class="col.col20 item item-thumbnail- r" ng-repeat="story in operics" href="#">
+    <a style="border-color: red;border-width: 2px;"class="col.col25 item item-thumbnail- r" ng-repeat="story in operics" href="#">
       <img class="m"src="">
     </a>  
     </div>
@@ -30,10 +30,10 @@
   <h3 class="fnt">Referanslar</h3>
 
   <div class="row">
-    <div class="col" ng-repeat="referans in operics.tr">
+    <div class="col" ng-repeat="referans in operics">
       <a class="item item-thumbnail- h" href="#">
       <img class="rfr"src="{{referans.img}}">
-      {{referans.tr.references.id}}
+      {{referans.img}}
       </a>
     </div>
   </div>
