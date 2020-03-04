@@ -8,22 +8,12 @@
 
 
     <h3 class="fnt">Müşteri Hikayeleri</h3>
-    <div class="" >
+    <div class="row" >
 
-    <a style="border-color: red;border-width: 2px;"class="item item-thumbnail- r" href="#">
-      <img class="m"src="img/rsm/y.png">
+    <a style="border-color: red;border-width: 2px;"class="col.col20 item item-thumbnail- r" ng-repeat="story in operics" href="#">
+      <img class="m"src="">
     </a>  
-
-
-    <a style="border-color:red;border-width: 2px;"class="item item-thumbnail- ri" href="#">
-      <img class="m"src="img/rsm/h.png">
-    </a>
-
-
-    <a style="border-color: red;border-width: 2px;"class="item item-thumbnail- rü" href="#">
-      <img class="m"src="img/rsm/m.jpg">
-    </a>
-  </div>
+    </div>
 
 
 
@@ -43,7 +33,7 @@
     <div class="col" ng-repeat="referans in operics.tr">
       <a class="item item-thumbnail- h" href="#">
       <img class="rfr"src="{{referans.img}}">
-      {{referans.references.id}}
+      {{referans.tr.references.id}}
       </a>
     </div>
   </div>
