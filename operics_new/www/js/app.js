@@ -107,7 +107,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'MainCtrl'
         }
       }
+<<<<<<< Updated upstream
     })
+=======
+    }
+  })
+  
+  .state('tab.dash', {
+    url: '/dash',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'MainCtrl'
+      }
+    }
+  })
+>>>>>>> Stashed changes
 
   .state('tab.account', {
     url: '/account',
@@ -118,6 +133,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   });
+
+  
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/main');
