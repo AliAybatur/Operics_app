@@ -84,6 +84,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
+<<<<<<< Updated upstream
+=======
+  
+  
+>>>>>>> Stashed changes
 
   .state('tab.aboutus-detail', {
     url: '/aboutusdetail',
