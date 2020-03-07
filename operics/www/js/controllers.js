@@ -1,127 +1,182 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $http) {
+.controller('MainCtrl', function($scope, $rootScope, $stateParams, $ionicModal, $http) {
+      
+    $rootScope.webServiceUrl = "http://www.microwebservice.net/operics_web/webservice.php" 
 
-    //$rootScope.user = {id:13,ad:'Ali',Soyad:'Veli',yas:19};
+    var ServiceRequest = {
+        service_type: "referanslar"
+    }
+        // Yeni user isteği post edilir ve veritabanına eklenir.
+     $http.post($rootScope.webServiceUrl, ServiceRequest).success(function(data) {
+        $scope.referanslar= data
+        $scope.parameter= data.ID
+    })
 
-
- $rootScope.webServiceUrl = "http://www.microwebservice.net/operics_web/webservice.php" 
-
-// Kullanıcı Girişi
- $scope.doLogin = function() {
-        var ServiceRequest = {
-            service_type: "giris",
-            email:$scope.loginData.email,
-            sifre: $scope.loginData.password
+    var ServiceRequest = {
+        service_type: "egitimler"
+    }
+        // Yeni user isteği post edilir ve veritabanına eklenir.
+        $http.post($rootScope.webServiceUrl, ServiceRequest).success(function(data) {
+        $scope.egitimler= data
+    })
+       
+       
+       /*
+       var ServiceRequest = {
+            service_type: "sozluk"
         }
         // Yeni user isteği post edilir ve veritabanına eklenir.
        $http.post($rootScope.webServiceUrl, ServiceRequest).success(function(data) {
-            $scope.giris= data
+            $scope.sozluk= data[0]
         })
-    }
+        */
+        
 
-//Kullanıcı Ekleme
+    $scope.abouttab = 0;
+    $scope.bottomtab = 0;
+
+    $scope.tiklaab=function() {
+        console.log($scope.abouttab);
+    };
+
+    $scope.tiklabot=function() {
+        console.log($scope.bottomtab);
+    };
     
-$scope.createUser = function() {
-        var ServiceRequest = {
-            service_type: "kayit",
-            ad:$scope.createData.name,
-            soyad:$scope.createData.surname,
-            tel:$scope.createData.tel,
-            firma:$scope.createData.corp,
-            departman:$scope.createData.assigm,
-            email:$scope.createData.email,   
-            sifre: $scope.createData.password,
-            sifrekntrl: $scope.createData.passcheck
-
+    $scope.stories = [
+        {
+            head: 'Microsoft İş Güvenliği Danışmanlığı',
+            des: '10 Yıldan fazla sektör tecrübesine sahiptir. Bilgisayar mühendisliği bölümü mezunudur.',
+            img: 'img/stories/3.png',
+            id: 0
+        },
+        {
+            head: 'Yıldız Teknik Üniversitesi İSG Eğitimleri',
+            des: '10 Yıldan fazla sektör tecrübesine sahiptir. Bilgisayar mühendisliği bölümü mezunudur.',
+            img: 'img/stories/5.png',
+            id: 1
+        },
+        
+        {
+            head: 'Honda C Sınıfı İSG Uzmanları Arıyor',
+            des: '10 Yıldan fazla sektör tecrübesine sahiptir. Bilgisayar mühendisliği bölümü mezunudur.',
+            img: 'img/stories/4.png',
+            id: 2
         }
-        // Yeni user isteği post edilir ve veritabanına eklenir.
-       $http.post($rootScope.webServiceUrl, ServiceRequest).success(function(data) {
-            $scope.kayit= data
-            window.localStorage.removeItem('user_type')
-            window.localStorage.getItem('user_type')
-            window.localStorage.setItem('user_type', 'admin')
-
-        })
-    }
-
- $rootScope.lan = { detayButon:'Ön Başvuru Yap',geriButton:'Geri'};
+    ];
 
 
-
-
-
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-    $scope.linkURL = function(path) {
-
-
-            window.location.href = path;
-        }
-        // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
-    }).then(function(modal) {
+    $ionicModal.fromTemplateUrl('templates/detail.html', {scope: $scope}).then(function(modal) {
         $scope.modal = modal;
     });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
+  
+    $scope.extendstory = function() {        
         $scope.modal.hide();
     };
 
-    // Open the login modal
-    $scope.login = function() {
-        $scope.modal.show();
-    };
-
-})
-
-
-.controller('AnasayfaCtrl', function($scope,$stateParams,$rootScope, $http) {
- 
-   var ServiceRequest = {
-            service_type: "egitimler"
-        }
-        // Yeni user isteği post edilir ve veritabanına eklenir.
-       $http.post($rootScope.webServiceUrl, ServiceRequest).success(function(data) {
-            $scope.egitimler2= data
-        })
-
-  $rootScope.egitimler = [
-    { title: 'Endüstriyel Teknolojiler ve Teknikleri Genel Değerlendirme Eğitimi',img:'img/egitim/1.jpg',sure:'20 saat',lokasyon:'Marmara Form AVM İstanbul',tarih:'12.02.2020-19.02.2020', id: 0 },
-    { title: 'Boya Teknikleri Uzmanlık Eğitimi',img:'img/egitim/2.png',sure:'20 saat',lokasyon:'Marmara Form AVM İstanbul',tarih:'12.02.2020-19.02.2020', id: 1 },
-    { title: 'Patlayıcı Ortam Eğitimi',img:'img/egitim/3.png',sure:'20 saat',lokasyon:'Marmara Form AVM İstanbul',tarih:'12.02.2020-19.02.2020', id: 2 },
-    { title: 'Indie',img:'img/egitim/2.png',sure:'20 saat',lokasyon:'Marmara Form AVM İstanbul',tarih:'12.02.2020-19.02.2020', id: 3 },
-    { title: 'Rap',img:'img/egitim/2.png',sure:'20 saat',lokasyon:'Marmara Form AVM İstanbul',tarih:'12.02.2020-19.02.2020', id: 4 },
-    { title: 'Cowbell',img:'img/egitim/2.png',sure:'20 saat',lokasyon:'Marmara Form AVM İstanbul',tarih:'12.02.2020-19.02.2020', id: 5 }
-   ];
-
-
     
- $rootScope.hizmet = [
-    { title: 'İŞ GÜVENLİĞİ UZMANLIĞI HİZMETLERİ', id: 0 },
-    { title: 'İŞYERİ HEKİMLİĞİ HİZMETİ', id: 1 },
-    { title: 'MOBİL SAĞLIK HİZMETLERİ',id: 2 },
-    { title: 'İŞYERİ ORTAM ÖLÇÜMLERİ', id: 3 },
-    { title: 'SIFIR KAZA PROJESİ', id: 4 },
-   ];
+           
+    $scope.team = [
+        {
+            name: 'Şule Deniz',
+            pos: 'Genel Müdür',
+            des: '10 Yıldan fazla sektör tecrübesine sahiptir. Bilgisayar mühendisliği bölümü mezunudur.',
+            img: 'img/team/1.jpg',
+            id: 0
+        },
+        {
+            name: 'Ahmet Erkoç',
+            pos: 'Eğitim Direktörü',
+            des: '10 Yıldan fazla sektör tecrübesine sahiptir. Bilgisayar mühendisliği bölümü mezunudur.',
+            img: 'img/team/2.png',
+            id: 1
+        },
+        {
+            name: 'Damla Erol',
+            pos: 'İK Uzmanı',
+            des: '10 Yıldan fazla sektör tecrübesine sahiptir. Bilgisayar mühendisliği bölümü mezunudur.',
+            img: 'img/team/3.jpg',
+            id: 2
+        }
+    ];
 
-    if ($stateParams) {
-        $rootScope.detay = $rootScope.egitimler[$stateParams.detayId];
-    }
+    $scope.courses = [
+        {
+            name: 'Teknik İşler İş Sağlığı Eğitiminiz',
+            des: 'İsg profesyonellerine endüstride karşılanabilecek toksik maruziyetleri etkin bir şekilde değerlendirebilme ve süreci yönetebilme ve süreci yönetebilme bilgi ve becerisi kazandırılması',
+            img: 'img/courses/1.png',
+            len: '20 saat',
+            loc: 'Maltepe Mah Yıldız İş Hanı Kat:17 Esentepe / Ankara',
+            date: '19 Mart 2020',
+            id: 0
+        },
+        {
+            name: 'ISO 3100 Eğitimi',
+            des: 'İsg profesyonellerine endüstride karşılanabilecek toksik maruziyetleri etkin bir şekilde değerlendirebilme ve süreci yönetebilme ve süreci yönetebilme bilgi ve becerisi kazandırılması',
+            img: 'img/courses/2.png',
+            len: '10 saat',
+            loc: 'Maltepe Mah Yıldız İş Hanı Kat:17 Esentepe / Ankara',
+            date: '29 Mart 2020',
+            id: 1
+        },
+        {
+            name: 'ISG Eğitimi',
+            des: 'İsg profesyonellerine endüstride karşılanabilecek toksik maruziyetleri etkin bir şekilde değerlendirebilme ve süreci yönetebilme ve süreci yönetebilme bilgi ve becerisi kazandırılması',
+            img: 'img/courses/3.png',
+            len: '25 saat',
+            loc: 'Maltepe Mah Yıldız İş Hanı Kat:17 Esentepe / Ankara',
+            date: '10 Nisan 2020',
+            id: 2
+        }
+    ];
+    
+    $scope.services = [
+        {
+            name: 'Analizler',
+            des: 'Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin.',
+            detdes: 'Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin. Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin.',
+            ico: 'img/services/1.png',
+            id: 0
+        },
+        {
+            name: 'İSG Danışmanlık',
+            des: 'Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin.',
+            detdes: 'Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin. Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin.',
+            ico: 'img/services/2.png',
+            id: 1
+        },
+        {
+            name: 'Destek',
+            des: 'Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin.',
+            detdes: 'Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin. Sektöre yönelik analizlerimiz ile işinizi hızlı ve kolay şekilde gelişin.',
+            ico: 'img/services/3.png',
+            id: 2
+        }
+    ];
+        
+    $scope.headlines = [
+        { name: 'Müşteri Hikayeleri', id: 0 },
+        { name: 'Hizmetlerimiz', id: 1 },
+        { name: 'Referanslar', id: 2 },
+        { name: 'Ekibimiz', id: 3 }
+    ];
 
-})
-
-
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-
+    $scope.tabs = [
+        { name: 'Ana Sayfa', id: 0 },
+        { name: 'Hakkımızda', id: 1 },
+        { name: 'Eğitimlermiz', id: 2 },
+        { name: 'Sözlük', id: 3 },
+        { name: 'İletişim', id: 3 },
+        { name: 'Hesabım', id: 3 }
+    ];
+    
+    if ($stateParams.detayId) {
+        $scope.bilgi = $scope.Operics[$stateParams.detayId];
+    } 
+    
 });
+
+
+
+

@@ -3,128 +3,144 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+// 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs).
-        // The reason we default this to hidden is that native apps don't usually show an accessory bar, at
-        // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
-        // useful especially with forms, though we would prefer giving the user a little more room
-        // to interact with the app.
-        if (window.cordova && window.Keyboard) {
-            window.Keyboard.hideKeyboardAccessoryBar(true);
-        }
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs).
+    // The reason we default this to hidden is that native apps don't usually show an accessory bar, at
+    // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
+    // useful especially with forms, though we would prefer giving the user a little more room
+    // to interact with the app.
+    if (window.cordova && window.Keyboard) {
+      window.Keyboard.hideKeyboardAccessoryBar(true);
+    }
 
-        if (window.StatusBar) {
-            // Set the statusbar to use the default style, tweak this to
-            // remove the status bar on iOS or change it to use white instead of dark colors.
-            StatusBar.styleDefault();
-        }
-    });
+    if (window.StatusBar) {
+      // Set the statusbar to use the default style, tweak this to
+      // remove the status bar on iOS or change it to use white instead of dark colors.
+      StatusBar.styleDefault();
+    }
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
 
-        .state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/menu.html',
-        controller: 'AppCtrl'
+  // Ionic uses AngularUI Router which uses the concept of states
+  // Learn more here: https://github.com/angular-ui/ui-router
+  // Set up the various states which the app can be in.
+  // Each state's controller can be found in controllers.js
+  $stateProvider
+
+  // setup an abstract state for the tabs directive
+    .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
+
+  // Each tab has its own nav history stack:
+
+  .state('tab.profile', {
+    url: '/profile',
+    views: {
+      'tab-profile': {
+        templateUrl: 'templates/tab-profile.html',
+        controller: 'MainCtrl'
+      }
+    }
+  })
+
+  .state('tab.main', {
+    url: '/main',
+    views: {
+      'tab-main': {
+        templateUrl: 'templates/tab-main.html',
+        controller: 'MainCtrl'
+      }
+    }
+  })
+ .state('tab.aboutus', {
+    url: '/aboutus',
+    views: {
+      'tab-aboutus': {
+        templateUrl: 'templates/tab-aboutus.html',
+        controller: 'MainCtrl'
+      }
+    }
+  })
+
+  .state('tab.dictionary', {
+      url: '/dictionary',
+      views: {
+        'tab-dictionary': {
+          templateUrl: 'templates/tab-dictionary.html',
+          controller: 'MainCtrl'
+        }
+      }
+    })
+   .state('tab.courses', {
+      url: '/courses',
+      views: {
+        'tab-courses': {
+          templateUrl: 'templates/tab-courses.html',
+          controller: 'MainCtrl'
+        }
+      }
+    })
+ .state('tab.courses-detail', {
+      url: '/coursedetail',
+      views: {
+        'tab-courses': {
+          templateUrl: 'templates/courses-detail.html',
+          controller: 'MainCtrl'
+        }
+      }
+    })
+ .state('tab.aboutus-detail', {
+      url: '/aboutusdetail',
+      views: {
+        'tab-aboutus': {
+          templateUrl: 'templates/aboutus-detail.html'
+        }
+      }
     })
 
-    .state('app.search', {
-        url: '/search',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/search.html'
-            }
+ .state('tab.story-ex', {
+      url: '/storyextended',
+      views: {
+        'tab-main': {
+          templateUrl: 'templates/story-extended.html',
+          controller: 'MainCtrl'
         }
+      }
     })
 
-    .state('app.detay', {
-        url: '/anasayfa/:detayId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/detay.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
-    })
+  .state('tab.account', {
+    url: '/account',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
+      }
+    }
+  })
 
-    .state('app.anasayfa', {
-        url: '/anasayfa',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/anasayfa.html',
-                controller: 'AnasayfaCtrl'
-            }
+  .state('tab.contact', {
+      url: '/contact',
+      views: {
+        'tab-contact': {
+          templateUrl: 'templates/tab-contact.html',
+          controller: 'contactCtrl'
         }
-    })
-
-    .state('app.hakkimizda', {
-        url: '/hakkimizda',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/hakkimizda.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
-    })
-
-    .state('app.referanslar', {
-        url: '/referanslar',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/referanslar.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
-    })
-
-    .state('app.hizmetler', {
-        url: '/hizmetler',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/hizmetler.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
-    })
-
-    .state('app.hizmetdetayi', {
-        url: '/hizmetler/:detayId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/hizmet_detay.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
-    })
-
-    .state('app.takim', {
-        url: '/takim',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/takim.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
-    })
-
-    .state('app.sozluk', {
-        url: '/sozluk',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/sozluk.html',
-                controller: 'AnasayfaCtrl'
-            }
-        }
+      }
     });
 
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/anasayfa');
+
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/tab/main');
+
 });
